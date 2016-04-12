@@ -1,0 +1,71 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../paper-toast/paper-toast.html">
+
+<!--
+An element providing a solution to no problem in particular.
+
+Example:
+
+    <auth-states></auth-states>
+
+Example:
+
+    <auth-states>
+      <h2>Hello auth-states</h2>
+    </auth-states>
+
+@demo demo/index.html
+@hero hero.svg
+-->
+
+<dom-module id="auth-states">
+  <style>
+    :host {
+
+    }
+  </style>
+
+  <template>
+    <paper-toast id="toastError"></paper-toast>
+    <paper-toast id="toastWarning"></paper-toast>
+    <paper-toast id="toastSuccess"></paper-toast>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'auth-states',
+      properties: {
+        result: {
+          type: Object,
+          value: function() {
+            return {};
+          }
+        },
+        url: {
+          type: String
+        }
+      },
+      observers: [
+        'errorChanged(result.error)',
+        'warningChanged(result.warning)',
+        'successChanged(result.success)'
+      ],
+      errorChanged: function(error) {
+        if (error) {
+          this.$.toastError.show({text: error, duration: 5000});
+        }
+      },
+      warningChanged: function(warning) {
+        if (warning) {
+          this.$.toastWarning.show({text: warning, duration: 5000});
+        }
+      },
+      successChanged: function(success) {
+        if (success) {
+          this.$.toastSuccess.show({text: success, duration: 5000});
+        }
+      }
+    });
+  </script>
+</dom-module>

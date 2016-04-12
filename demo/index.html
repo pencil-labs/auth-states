@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>auth-states Demo</title>
+    <script src="../../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <link rel="import" href="../auth-states.html">
+    <link rel="import" href="../../iron-ajax/iron-ajax.html">
+    <link rel="import" href="../../paper-button/paper-button.html">
+  </head>
+  <body unresolved>
+    <iron-ajax id="ajax"
+      auto url="" handle-as="json"
+      debounce-duration="300">
+    </iron-ajax>
+
+    <auth-states id="auth" ></auth-states>
+
+    <paper-button id="errorBtn">Show error</paper-button>
+    <paper-button id="warningBtn">Show warning</paper-button>
+    <paper-button id="successBtn">Show success</paper-button>
+    <script>
+
+      var ajax = document.querySelector('#ajax');
+      ajax.addEventListener('response', function(event) {
+        var auth = document.querySelector('#auth');
+        auth.result = event.target.lastResponse;
+        console.log(auth.result);
+      });
+
+      document.querySelector('#errorBtn').addEventListener('tap', function() {
+        ajax.url="./error.json"
+      });
+      document.querySelector('#warningBtn').addEventListener('tap', function() {
+        ajax.url="./warning.json"
+      });
+      document.querySelector('#successBtn').addEventListener('tap', function() {
+        ajax.url="./success.json"
+      });
+
+    </script>
+
+  </body>
+</html>
